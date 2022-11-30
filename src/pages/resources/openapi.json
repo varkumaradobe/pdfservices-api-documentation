@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://pdf-services.adobe.io/"
+      "url": "https://pdf-services.adobe.io"
     }
   ],
   "tags": [
@@ -1435,6 +1435,11 @@
         ],
         "summary": "Create PDF document from non PDF document.",
         "description": "Create PDF document from Microsoft Office documents (Word, Excel and PowerPoint) and Image file formats.",
+        "callbacks": {
+          "result": {
+            "$ref": "#/components/callbacks/test"
+          }
+        },
         "operationId": "pdfoperations.createpdf",
         "parameters": [
           {
@@ -7007,6 +7012,43 @@
     }
   },
   "components": {
+    "callbacks":{
+      "test": {
+        "/operation/createpdf": {
+          "post": {
+            "requestBody": {
+              "description": "Call back Payload",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CreatePDF"
+                  }
+                }
+              }
+            },
+            "responses": {
+              "201": {
+                "description": "Request creation for the operation and status uri generated, which can be found in the 'location' header.",
+                "headers": {
+                  "location": {
+                    "description": "Job status URI for polling the results",
+                    "schema": {
+                      "type": "string"
+                    }
+                  },
+                  "x-request-id": {
+                    "description": "A unique value to identify this request. If x-request-id is specified in the POST request, this value will be the same as the input.",
+                    "schema": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "schemas": {
       "documentLanguage": {
         "description": "Specifies the default language for the input non-PDF document. In absence of font info within file’s content, an appropriate font is chosen on its basis.",
@@ -7652,13 +7694,13 @@
               "properties": {
                 "assetID": {
                   "description": "A file assetID. For more details <a href = 'https://developer.adobe.com/document-services/docs/apis/#tag/Assets'> click here </a>.",
-                  "type": "string",
-                  "required": true
+                  "type": "string"
                 },
                 "pageRanges": {
                   "$ref": "#/components/schemas/CombinePageRanges"
                 }
-              }
+              },
+              "required": ["assetID"]
             }
           }
         },

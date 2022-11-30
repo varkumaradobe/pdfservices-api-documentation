@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://pdf-services.adobe.io/"
+      "url": "https://pdf-services.adobe.io"
     }
   ],
   "tags": [
@@ -7652,13 +7652,13 @@
               "properties": {
                 "assetID": {
                   "description": "A file assetID. For more details <a href = 'https://developer.adobe.com/document-services/docs/apis/#tag/Assets'> click here </a>.",
-                  "type": "string",
-                  "required": true
+                  "type": "string"
                 },
                 "pageRanges": {
                   "$ref": "#/components/schemas/CombinePageRanges"
                 }
-              }
+              },
+              "required": ["assetID"]
             }
           }
         },

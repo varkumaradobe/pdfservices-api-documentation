@@ -10,7 +10,7 @@ export function requestInterceptor(req, operation) {
     // you can also change the req URL
     req.url = '/proxy' + req.url;
     
-    console.log("varundev root")
+    console.log("varundev")
 
     return req;
 }

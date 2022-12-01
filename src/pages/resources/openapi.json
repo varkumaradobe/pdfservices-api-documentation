@@ -8,9 +8,16 @@
   "servers": [
     {
       "url": "https://pdf-services.adobe.io"
+    },
+    {
+      "url": "https://ims-na1.adobelogin.com"
     }
   ],
   "tags": [
+    {
+      "name": "Generate Access Token",
+      "description": "Generate Access Token."
+    },
     {
       "name": "Assets",
       "description": "Upload and download assets."
@@ -86,6 +93,12 @@
   ],
   "x-tagGroups": [
     {
+      "name": "Authentication",
+      "tags": [
+        "Generate Access Token"
+      ]
+    },
+    {
       "name": "Files",
       "tags": [
         "Assets"
@@ -120,6 +133,168 @@
     }
   ],
   "paths": {
+    "/ims/exchange/jwt": {
+      "post": {
+        "tags": [
+          "Generate Access Token"
+        ],
+        "summary": "Generate Access Token",
+        "description": "Go to console to <a href=\"https://dc.dev.dexilab.acrobat.com/dc-services-sdk-playground-cdn/index.html\">Generate JWT</a>",
+        "operationId": "jwt.accesstoken",
+        "parameters": [],
+        "requestBody": {
+          "description": "Params for getting access token",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/GenrateAccessTokenRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "The request was successful.",
+            "headers": {
+              "x-request-id": {
+                "description": "A unique value to identify this request. If x-request-id is specified in the POST request, this value will be the same as the input.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenrateAccessTokenAsset"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request. The request was invalid or cannot be otherwise served.",
+            "headers": {
+              "content-type": {
+                "description": "The content type of the POST API call response",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "x-request-id": {
+                "description": "A unique value to identify this request. If x-request-id is specified in the POST request, this value will be the same as the input.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "headers": {
+              "content-type": {
+                "description": "The content type of the error JSON response.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "x-request-id": {
+                "description": "A unique value to identify this request. If x-request-id is specified in the POST request, this value will be the same as the input.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/401"
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Request Timed Out. Some operation has timed out due to client issue.",
+            "headers": {
+              "content-type": {
+                "description": "The content type of the POST API call response",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "x-request-id": {
+                "description": "A unique value to identify this request. If x-request-id is specified in the POST request, this value will be the same as the input.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/408"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Caller doesn't have sufficient quota for this operation.",
+            "headers": {
+              "content-type": {
+                "description": "The content type of the POST API call response",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "x-request-id": {
+                "description": "A unique value to identify this request. If x-request-id is specified in the POST request, this value will be the same as the input.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/429"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. The server has encountered an error and is unable to process your request at this time.",
+            "headers": {
+              "content-type": {
+                "description": "The content type of the POST API call response",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "x-request-id": {
+                "description": "A unique value to identify this request. If x-request-id is specified in the POST request, this value will be the same as the input.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/500"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/assets": {
       "post": {
         "tags": [
@@ -8405,6 +8580,46 @@
           "assetID": "urn:aaid:AS:UE1:23c30ee0-2c4d-46d6-87f2-087832fca718",
           "uploadUri": "https://dcplatformstorageservice-dev-us-east-1.s3-accelerate.amazonaws.com/aa8d8790-321a-4487-92da-0e90ba931239?X-Amz-Security-Token=FwoGZXIvYXdzEP7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDDvZayrA6JI2vhkxPiLTAVI%2Fy0F2v7Us5rBDlEd53dHuO2KAe5Bkbs2AmUHtscOPbsH%2Bzh1aFDnv%2BW2nHAiENSNbV2Auq6b5%2FatImE8hUs2wTwV%2BCSB%2FJb896AF905k%2B9ljhZDty2caFGQSHY2lC2OQ4Rr9%2FdS%2FNKwWgnHr4Ld5AtweavSyfhFMfz%2Fw7zLXvHupnLhOISBqqEOTMQim4YDLGzxIt9%2F4C1MKBUSSdGYBX14rfjTSiB%2FivjjjEdNrRRnkGoIg%2Fxe5b1dFDdgukwXWEBsKtZ2qpmZl2uW1boMTHonQoxMTCmAYyLS2FEiNOvaV7rvm8oy6MtGvv2JVY%2FPz%2FFPab%2BhjsCG60vS3kHih4Zy8rUUKv%2Fw%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20220901T121500Z&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Expires=3599&X-Amz-Credential=ASIAU5PA7W47IU63S5WX%2F20220901%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=5424c781b8671fb1d7e068267af26e9de4d9a606f343c0bb8602d2a70ab52fcd"
         }
+      },
+      "GenrateAccessTokenAsset": {
+        "type": "object",
+        "properties": {
+          "token_type": {
+            "description": "token type",
+            "type": "string"
+          },
+          "access_token": {
+            "description": "access token",
+            "type": "string"
+          },
+          "expires_in": {
+            "description": "expires in",
+            "type": "integer"
+          }
+        },
+        "example": {
+          "token_type": "bearer",
+          "access_token": "eyJhbGciOiJSUzI1NiIsIng1dSI6Imltc19uYTEta2V5LWF0LTEuY2VyIiwia2lkIjoiaW1zX25hMS1rZXktYXQtMSIsIml0dCI6ImF0In0.eyJpZCI6IjE2Njk4OTU2OTczODFfNWZiNTZmYzEtNzRlZC00Zjk1LWJkN2QtMzE5MjRlZTg0NGY3X3VlMSIsInR5cGUiOiJhY2Nlc3NfdG9rZW4iLCJjbGllbnRfaWQiOiJmZTdlNjRiYWQ0MDk0Y2FiOGJkZjY3YjUwMzc3MGU3MCIsInVzZXJfaWQiOiIxMjE0MjE3OTYzODg3MUMzMEE0OTVDQzNAdGVjaGFjY3QuYWRvYmUuY29tIiwiYXMiOiJpbXMtbmExIiwiYWFfaWQiOiIxMjE0MjE3OTYzODg3MUMzMEE0OTVDQzNAdGVjaGFjY3QuYWRvYmUuY29tIiwiY3RwIjowLCJmZyI6Ilc3V0FWSElOSFBFN0lYV0tFT1E1WUhZQTdVPT09PT09IiwibW9pIjoiOTBjZGMxNTAiLCJleHBpcmVzX2luIjoiODY0MDAwMDAiLCJzY29wZSI6Im9wZW5pZCxEQ0FQSSxBZG9iZUlELGFkZGl0aW9uYWxfaW5mby5vcHRpb25hbEFncmVlbWVudHMiLCJjcmVhdGVkX2F0IjoiMTY2OTg5NTY5NzM4MSJ9.gkylkzCjZJuDDasEgpmcuVtKDgkxCUjj2_XZg9yLffrTa3XPtIwCg0v6jg6OmyILGN9hVB6upaNqrZQjM5U26CCCY00PLKRZ3zIAZsZPkklxGPxUeebEcDN2DJdjBIMoSOr-EaM6s4iEIyq6GCvLhIrxIhEjtkek-Vw7kLhf1Id0-OaL8NZ7KCxJ2yDDLo9JUluM-ujxEOolRJcfvkc8k_zFpCz0brxUEOBP7kyZ7jYaLFE33d4ZA1ahh5bQwpflVblf1I5AJAZfJFycsbal1G37QYu7M6VzvChDWLUPT41B6Y-VDpF8N1C26LGPMLG5CKAcam2PCYaJW4HB6MaHTQ",
+          "expires_in": 86399998
+        }
+      },
+      "GenrateAccessTokenRequest": {
+        "type": "object",
+        "properties": {
+          "client_id": {
+            "description": "client id",
+            "type": "string"
+          },
+          "client_secret": {
+            "description": "client secret",
+            "type": "string"
+          },
+          "jwt_token": {
+            "description": "jwt_token",
+            "type": "string"
+          }
+        },
+        "required": ["client_id", "client_secret", "jwt_token"]
       },
       "GetUploadPresignedUrlRequest": {
         "type": "object",

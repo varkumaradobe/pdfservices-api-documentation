@@ -8,9 +8,6 @@
   "servers": [
     {
       "url": "https://pdf-services.adobe.io"
-    },
-    {
-      "url": "https://ims-na1.adobelogin.com"
     }
   ],
   "tags": [
@@ -134,6 +131,11 @@
   ],
   "paths": {
     "/ims/exchange/jwt": {
+      "servers": [
+        {
+          "url": "https://ims-na1.adobelogin.com"
+        }
+      ],
       "post": {
         "tags": [
           "Generate Access Token"

@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://pdf-services.adobe.io/"
+      "url": "https://pdf-services.adobe.io"
     }
   ],
   "tags": [
